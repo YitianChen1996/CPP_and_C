@@ -39,7 +39,7 @@ Fraction operator-(const Fraction& leftFraction, const Fraction& rightFraction) 
     f.reduce();<br>
     return f;<br>
 }<br><br>
-Binary arithmetic operator can also be implemented as member function, but in this case, it should has only one parameter. See the implementation of operator+ in the Fraction.cpp
+Binary arithmetic operator can also be implemented as member function, but in this case, it should has only one parameter. See the implementation of operator+ in the Fraction.cpp<br>
 c.Stream extraction(>>) and insertion(<<) must be implemented as non-member function, because they use user-defined type as the right argument.<br>
 Their declration are:<br>
 friend istream & operator>>(istream &in, Fraction &f);//not const, because your aim is to change the value in it.<br>
