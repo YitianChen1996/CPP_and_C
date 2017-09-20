@@ -18,14 +18,14 @@ f2 = f1;//it is the assignment (operator=) is called.<br><br>
 2.You can also overload some operators<br>
 There are 38 operators in C++ you can overload, in C++'s official document:http://en.cppreference.com/w/cpp/language/operators<br>
 And there are two ways to realize it, one is overload as a member function, or overload it as a non-member function(friend function).<br>
-Assignment operator(=) must be implemented as a member function.You pass in a <b>const reference</b> of the class, and return *this*/ as the result.<br><br>
+a.Assignment operator(=) must be implemented as a member function.You pass in a <b>const reference</b> of the class, and return *this*/ as the result.<br><br>
 Fraction& Fraction::operator=(const Fraction& rightFraction) {<br>
     cout << "Called assignment operator." << endl;<br>
     numerator = rightFraction.numerator;<br>
     denominator = rightFraction.denominator;<br>
     return (*this);<br>
 }<br><br>
-Binary Arithmetic operators (+,-*,/) can be implemented as non-member functions, in order to main symmetry(for example, when adding a complex number and an integer, if operator+ is a member function of the complex type, then only complex+integer would compile, and not integer+complex)<br>
+b.Binary Arithmetic operators (+,-*,/) can be implemented as non-member functions, in order to main symmetry(for example, when adding a complex number and an integer, if operator+ is a member function of the complex type, then only complex+integer would compile, and not integer+complex)<br>
 To declare a friend function in a class, we can use "friend" keyword. A friend function has the right to access all private members in the class. And another thing is, they can be declared in the class, but defined(implemented by code) outside the scope of the class.<br>
 For example:<br><br>
 in Fraction.h:<br>
@@ -40,5 +40,22 @@ Fraction operator-(const Fraction& leftFraction, const Fraction& rightFraction) 
     return f;<br>
 }<br><br>
 Binary arithmetic operator can also be implemented as member function, but in this case, it should has only one parameter. See the implementation of operator+ in the Fraction.cpp
+c.Stream extraction(>>) and insertion(<<) must be implemented as non-member function, because they use user-defined type as the right argument.<br>
+Their declration are:<br>
+friend istream & operator>>(istream &in, Fraction &f);//not const, because your aim is to change the value in it.<br>
+friend ostream & operator<<(ostream &out, const Fraction &f);<br><br>
+Theit definition is:
+istream &operator>>(istream &in, Fraction &f) {<br>
+    char ch;<br>
+    in >> f.numerator >> ch >> f.denominator;<br>
+    f.sanityCheck();<br>
+    return (in);<br>
+}<br>
+
+ostream &operator<<(ostream &out, const Fraction &f) {<br>
+    out << f.numerator << '/' << f.denominator;<br>
+    return out;<br>
+}<br>
+
 
 
