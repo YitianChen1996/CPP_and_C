@@ -1,1 +1,2 @@
-Recently, I meet a problem.
+This directory shows how to make a JAVA program write to a file while another C++ program read that file, they need to be synchronized, because only when the writer finished can the reader read that file, and when the reader finished can the writer write to that file. Otherwise, the data that need to be transmitted will be lost or duplicated.<br/>
+If the two programs are both C++ or both JAVA, I think there might be some semaphore variables to solve this problem. But the problem is the writer is a JAVA program, and the reader is a C++ program. So the basic idea is use another file called "mutex.txt" to represent the semaphore. 
