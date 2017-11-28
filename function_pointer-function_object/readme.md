@@ -54,7 +54,7 @@ int Dish::insert(string s) {
 
 ## 2. function object
 
-While function pointer is very useful, function object is even stronger, it can accept arguments in the constructors so you can write all your comparsion functions in one class, and do not need to write so much conparsion functions. For example, when we build a heap, which in C++ STL, is priority_queue, we want both max heap and min heap. We can write a function object:
+While function pointer is very useful, function object is even stronger, it can accept arguments in the constructors so you can write all your comparsion functions in one class, and do not need to write so much conparsion functions, **the essence of the function object is overload the operator(), which is a very strong operator, it can take any numbers and any types of arguments**. For example, when we build a heap, which in C++ STL, is priority_queue, we want both max heap and min heap. We can write a function object:
 
 ```cpp
 
@@ -103,4 +103,41 @@ int main() {
 
 ```
 
-we get both max heap and min heap. Notice that we pass in a argument to the object(the "reverse"), so we do all the jobs in one class.
+we get both max heap and min heap. Notice that we pass in a argument to the object(the "reverse"), so we do all the jobs in one class.<br>
+Here is an example about how to use our own function object.
+Don't forget the essence of function pointer and function object is to pass a function as an argument. To use our own function object, we have to define a template.
+
+```cpp
+
+class cmp {
+private:
+    int times;
+
+public:
+    cmp(int times) {
+        this->times = times;
+    }
+
+    bool operator()(int elem) {
+        for (int i = 0; i <= times - 1; i++) {
+            cout << elem << endl;
+        }
+    }
+};
+
+template<class Iter, class function>
+void print_all(Iter first, Iter last, function f) {
+    while (first != last) {
+        f(*first); //do the operator(), use *first as the argument.
+        first++;
+    }
+};
+
+int main() {
+    vector<int> v;
+    v.push_back(1), v.push_back(2), v.push_back(3);
+    print_all(v.begin(), v.end(), cmp(2));
+    return 0;
+}
+
+```
